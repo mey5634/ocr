@@ -30,7 +30,7 @@ Test it by sending a path to JPEG (filepath or URL):
 ```shell
 curl -X POST http://127.0.0.1:5001/ \
      -H "Content-type: application/json" \
-     -d '{"image":"/Users/myegorov/projects/ocr/test/images/2.jpg"}'
+     -d '{"image":"/path/to/ocr/test/images/2.jpg"}'
 
 # => {"caption":"Abstract\n\nGood information design depends on clarifying the
 # meaningful\nstructure in an image. We describe a computational approach
@@ -43,7 +43,7 @@ curl -X POST http://127.0.0.1:5001/ \
 # user's eye movements\nin looking at the photo; the system renders a new image
 # using trans-\nformations that preserve and highlight these visual elements.
 # Our\n\u2018icin Hiss teececiiie a bee alernntive Snichne chumcedliatic
-# re.","img_path":"/Users/myegorov/projects/ocr/test/images/2.jpg","status":200}
+# re.","img_path":"/path/to/ocr/test/images/2.jpg","status":200}
 ```
 
 ```shell
@@ -52,7 +52,7 @@ curl -X POST \
   -H 'Content-Type: application/json' \
   -d '{"image":"https://pbs.twimg.com/media/DthcI5dV4AAR1GO?format=jpg&name=orig"}'
 
-# =>{"caption":"Text not found.","img_path":"/Users/myegorov/projects/ocr/tmp/4880886555319275386.jpg","status":415}
+# =>{"caption":"Text not found.","img_path":"https://pbs.twimg.com/media/DthcI5dV4AAR1GO?format=jpg&name=orig","status":415}
 ```
 
 Caveat: things are currently brittle -- no validation checks run.

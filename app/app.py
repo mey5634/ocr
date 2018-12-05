@@ -13,7 +13,7 @@ def create_app():
         if request.headers['Content-Type'] == 'application/json':
             img_path = get_data(request.json['image'])
             message = read_text_from_image(img_path)
-            message['img_path'] = img_path
+            message['img_path'] = request.json['image']
             resp = jsonify(message)
             resp.status_code = 200
         else:
