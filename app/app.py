@@ -1,13 +1,15 @@
 import os
 from flask import Flask, request, jsonify, json
+from flask_cors import CORS
 from ocr import read_text_from_image
 from fetch import get_data
+
 
 def create_app():
     # create and configure the app
     app = Flask(__name__)
+    CORS(app)
 
-    # our single endpoint: receives {'image': 'abs/path/to/image'}, returns {'caption': 'some caption'}
     @app.route('/', methods = ['POST'])
     def api_root():
         if request.headers['Content-Type'] == 'application/json':
@@ -15,7 +17,7 @@ def create_app():
             message = read_text_from_image(img_path)
             message['img_path'] = request.json['image']
             resp = jsonify(message)
-            resp.status_code = 200
+            resp.status_code = message['status']
         else:
             message = {
                     'status': 415,
@@ -24,6 +26,12 @@ def create_app():
             }
             resp = jsonify(message)
             resp.status_code = 415
+
+        # CORS
+        resp.headers['Access-Control-Allow-Credentials'] = 'true'
+        resp.headers['Access-Control-Allow-Origin'] = \
+                request.environ.get('HTTP_ORIGIN', 'localhost.twitter.com')
+
         return resp
     return app
 

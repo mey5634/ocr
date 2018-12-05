@@ -19,7 +19,7 @@ def get_data(url_or_filepath):
       outfile = os.path.join(TMPDIR, str(hash(url_or_filepath))+'.jpg')
       with open(outfile, 'wb') as f:
           resp.raw.decode_content = True
-          shutil.copyfileobj(resp.raw, f)   
+          shutil.copyfileobj(resp.raw, f)
       return outfile
     else: return None
   else:
