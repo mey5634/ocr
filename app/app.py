@@ -7,6 +7,7 @@ from fetch_and_parse import parse
 def create_app():
     # create and configure the app
     app = Flask(__name__)
+    app.url_map.strict_slashes = False
     CORS(app, supports_credentials=True)
 
     @app.route('/', methods = ['POST'])
@@ -26,7 +27,7 @@ def create_app():
 
         return resp
 
-    @app.route('/upload/', methods = ['POST'])
+    @app.route('/upload', methods = ['POST'])
     def upload():
         print("NOTE: request.headers", request.headers)
         print('NOTE: request.__dict__:', request.__dict__)
