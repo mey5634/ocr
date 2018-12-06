@@ -1,0 +1,6 @@
+=== twttr-ocr Buildpack URLs
+1. https://github.com/heroku/heroku-buildpack-apt
+2. heroku/python
+3. https://github.com/matteotiziano/heroku-buildpack-tesseract
+4. https://github.com/oswellchan/heroku-buildpack-tesseract
+5. https://github.com/dscout/wkhtmltopdf-buildpack.git
