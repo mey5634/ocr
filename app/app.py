@@ -25,6 +25,21 @@ def create_app():
             resp.status_code = 415
 
         return resp
+
+    @app.route('/upload/', methods = ['POST'])
+    def upload():
+        print("NOTE: request.headers", request.headers)
+        print('NOTE: request.__dict__:', request.__dict__)
+
+        message = {
+                'status': 200,
+                'caption': 'not yet set up to return caption',
+        }
+        resp = jsonify(message)
+        resp.status_code = 200
+
+        return resp
+
     return app
 
 if __name__ == '__main__':
