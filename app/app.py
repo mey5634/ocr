@@ -1,4 +1,4 @@
-import os
+import os, sys
 from flask import Flask, request, jsonify, json
 from flask_cors import CORS
 from fetch_and_parse import parse
@@ -30,6 +30,7 @@ def create_app():
     def upload():
         print("NOTE: request.headers", request.headers)
         print('NOTE: request.__dict__:', request.__dict__)
+        sys.stdout.flush()
 
         message = {
                 'status': 200,
