@@ -8,7 +8,7 @@ from fetch import get_data
 def create_app():
     # create and configure the app
     app = Flask(__name__)
-    CORS(app)
+    CORS(app, supports_credentials=True)
 
     @app.route('/', methods = ['POST'])
     def api_root():
@@ -26,11 +26,6 @@ def create_app():
             }
             resp = jsonify(message)
             resp.status_code = 415
-
-        # CORS
-        resp.headers['Access-Control-Allow-Credentials'] = 'true'
-        resp.headers['Access-Control-Allow-Origin'] = \
-                request.environ.get('HTTP_ORIGIN', 'localhost.twitter.com')
 
         return resp
     return app
