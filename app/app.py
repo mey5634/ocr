@@ -1,8 +1,7 @@
 import os
 from flask import Flask, request, jsonify, json
 from flask_cors import CORS
-from ocr import read_text_from_image
-from fetch import get_data
+from fetch_and_parse import parse
 
 
 def create_app():
@@ -13,9 +12,7 @@ def create_app():
     @app.route('/', methods = ['POST'])
     def api_root():
         if request.headers['Content-Type'] == 'application/json':
-            img_path = get_data(request.json['image'])
-            message = read_text_from_image(img_path)
-            message['img_path'] = request.json['image']
+            message = parse(request.json['image'])
             resp = jsonify(message)
             resp.status_code = message['status']
         else:
