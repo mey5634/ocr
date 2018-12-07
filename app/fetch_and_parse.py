@@ -15,14 +15,13 @@ def parse(url):
         try:
             buffer = cStringIO.StringIO(urllib.urlopen(url).read())
             img = Image.open(buffer) 
-            text = tesserocr.image_to_text(img).strip()
-            return { 'status': 200 if text else 415,
-                    'caption': text or 'Text not found.',
-                    'url': url}
+            res = ocr(img)
+            res['url'] = url
+            return res
         except:
             return {'status': 500,
                     'caption': "Couldn't retrieve the image at %s" %url,
-                    'ulr': url}
+                    'url': url}
     else: # is path to file
         with tesserocr.PyTessBaseAPI() as api:
             api.SetImageFile(url)
@@ -30,3 +29,10 @@ def parse(url):
             return { 'status': 200 if text else 415,
                      'caption': text or 'Text not found.',
                      'url': url}
+
+def ocr(img):
+    '''Receives PIL.Image, returns caption.
+    '''
+    text = tesserocr.image_to_text(img).strip()
+    return { 'status': 200 if text else 415,
+             'caption': text or 'Text not found.' }

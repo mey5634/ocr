@@ -1,7 +1,8 @@
 import os, sys
 from flask import Flask, request, jsonify, json
 from flask_cors import CORS
-from fetch_and_parse import parse
+from fetch_and_parse import parse, ocr
+from PIL import Image
 
 
 def create_app():
@@ -20,7 +21,7 @@ def create_app():
             message = {
                     'status': 415,
                     'caption': 'Unsupported media type',
-                    'img_path': img_path
+                    'url': img_path
             }
             resp = jsonify(message)
             resp.status_code = 415
@@ -29,6 +30,7 @@ def create_app():
 
     @app.route('/upload', methods = ['POST'])
     def upload():
+        img = Image.open(request.files['photo'].stream)
         print("NOTE: request.get_json():", request.get_json(), '\n\n')
         print("NOTE: request.data:", request.data, '\n\n')
         print("NOTE: request.headers", request.headers, '\n\n')
@@ -37,13 +39,8 @@ def create_app():
         print('NOTE: request.args:', request.args, '\n\n')
         print('NOTE: request.files:', request.files, '\n\n')
         print('NOTE: request.values:', request.values, '\n\n')
-
         sys.stdout.flush()
-
-        message = {
-                'status': 200,
-                'caption': 'not yet set up to return caption',
-        }
+        message = ocr(img)
         resp = jsonify(message)
         resp.status_code = 200
 
